@@ -26,8 +26,8 @@ export default function GridBackground() {
 
     let width = window.innerWidth;
     let height = window.innerHeight;
-    let mouse = { x: width * 0.7, y: height * 0.4 };
-    let drift = { x: 0, y: 0 };
+    const mouse = { x: width * 0.7, y: height * 0.4 };
+    const drift = { x: 0, y: 0 };
     let animId = 0;
     let paused = false;
 

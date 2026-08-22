@@ -87,7 +87,7 @@ export default function Exhibit({
           }`}
         >
           <p className="font-mono text-[10px] tracking-[0.35em] text-[var(--fg-dim)]">
-            <span className="text-[var(--accent)]">{index}</span> // SYSTEM EXHIBIT
+            <span className="text-[var(--accent)]">{index}</span> {"// SYSTEM EXHIBIT"}
           </p>
 
           <h2 className="mt-6 text-[clamp(2.75rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-[-0.03em] text-[var(--fg)]">

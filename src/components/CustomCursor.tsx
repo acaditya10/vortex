@@ -1,26 +1,28 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+
+function useMediaQuery(query: string) {
+  return useSyncExternalStore(
+    (callback) => {
+      const mq = window.matchMedia(query);
+      mq.addEventListener('change', callback);
+      return () => mq.removeEventListener('change', callback);
+    },
+    () => window.matchMedia(query).matches,
+    () => true,
+  );
+}
 
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(true);
+  const isMobile = useMediaQuery('(hover: none) and (pointer: coarse)');
   const [isHovering, setIsHovering] = useState(false);
   const mouse = useRef({ x: -100, y: -100 });
   const dotPos = useRef({ x: -100, y: -100 });
   const spotlightPos = useRef({ x: -100, y: -100 });
   const raf = useRef(0);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(hover: none) and (pointer: coarse)');
-    setIsMobile(mq.matches);
-
-    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   useEffect(() => {
     if (isMobile) return;
