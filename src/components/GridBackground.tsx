@@ -1,14 +1,12 @@
 'use client';
 
-import { useLayoutEffect, useEffect, useRef } from 'react';
-
-const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 export default function GridBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useBrowserEffect(() => {
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -360,6 +358,7 @@ export default function GridBackground() {
       ref={canvasRef}
       className="pointer-events-none fixed inset-0 z-0"
       aria-hidden="true"
+      suppressHydrationWarning
     />
   );
 }
