@@ -131,14 +131,14 @@ export default function Exhibit({
           <div className="lg:sticky lg:top-0 lg:flex lg:h-dvh lg:items-center lg:justify-center">
             <div
               ref={artRef}
-              className="exhibit-art mx-auto w-full max-w-[540px] border border-gray-800 bg-[#0C0C0C] overflow-hidden will-change-transform transition-colors duration-500 group-hover/exhibit:border-white/25"
+              className="exhibit-art mx-auto w-full max-w-[720px] border border-gray-800 bg-[#0C0C0C] overflow-hidden will-change-transform transition-colors duration-500 group-hover/exhibit:border-white/25"
             >
               <Image
                 src={imageSrc}
                 alt={imageAlt}
                 width={1200}
                 height={800}
-                sizes="(max-width: 1024px) 100vw, 65vw"
+                sizes="(max-width: 1024px) 100vw, 720px"
                 placeholder="blur"
                 blurDataURL="data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAEfQ//g=="
                 className="block h-auto w-full grayscale-[0.6] brightness-90 transition-[filter] duration-500 ease-out group-hover/exhibit:grayscale-0 group-hover/exhibit:brightness-100"
