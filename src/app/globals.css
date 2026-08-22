@@ -1,26 +1,422 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0A0A0A;
+  --bg-secondary: #111111;
+  --fg: #E8E4DE;
+  --fg-muted: #8A8580;
+  --fg-dim: #4A4744;
+  --accent: #C8B6A2;
+  --accent-hover: #DED0C2;
+  --border: rgba(200, 182, 162, 0.08);
+  --grain-opacity: 0.035;
+  --ocean-1: #3A6073;
+  --ocean-2: #6B9DAF;
+  --ocean-3: #1C3140;
+  --ocean-4: #4A7C8F;
+  --ocean-5: #8EB8C5;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-dim: var(--fg-dim);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
+  --font-mono: 'JetBrains Mono', monospace;
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
   }
 }
 
+::selection {
+  background: rgba(200, 182, 162, 0.2);
+  color: var(--fg);
+}
+
+html {
+  background: var(--bg);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Grain texture overlay — static on mobile, animated on desktop */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+  z-index: 20;
+  animation: grain 8s steps(10) infinite;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .grain::before {
+    animation: none;
+  }
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* Cursor spotlight */
+.cursor-spotlight {
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(200, 182, 162, 0.1) 0%,
+    rgba(200, 182, 162, 0.05) 30%,
+    rgba(200, 182, 162, 0.015) 60%,
+    transparent 80%
+  );
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+/* Custom cursor dot */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.2s ease, background 0.2s ease;
+  will-change: transform;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot.is-hovering {
+  transform: translate(-50%, -50%) scale(6);
+  background: rgba(200, 182, 162, 0.15);
+  border: 1px solid rgba(200, 182, 162, 0.3);
+}
+
+/* Headline text reveal */
+.headline-word {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.headline-word span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* CTA Button — slimy fluid ocean border */
+.cta-button-wrap {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  padding: 3px;
+  isolation: isolate;
+}
+
+/* Shared fluid layer base — hidden by default */
+.cta-fluid-border {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 14px;
+  background: conic-gradient(
+    from var(--cta-angle, 0deg),
+    var(--ocean-3),
+    var(--ocean-1),
+    var(--ocean-4),
+    var(--ocean-2),
+    var(--ocean-5),
+    var(--ocean-2),
+    var(--ocean-4),
+    var(--ocean-1),
+    var(--ocean-3)
+  );
+  filter: url(#slime-distort) blur(6px);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Layer 1 — primary blob */
+.cta-fluid-border--1 {
+  animation: cta-morph-1 4s ease-in-out infinite,
+             cta-drift 6s ease-in-out infinite,
+             cta-rotate 3s linear infinite;
+}
+
+/* Layer 2 — offset echo, slightly larger */
+.cta-fluid-border--2 {
+  inset: -6px;
+  background: conic-gradient(
+    from calc(var(--cta-angle, 0deg) + 120deg),
+    var(--ocean-5),
+    var(--ocean-3),
+    var(--ocean-2),
+    var(--ocean-1),
+    var(--ocean-4),
+    var(--ocean-1),
+    var(--ocean-2),
+    var(--ocean-3),
+    var(--ocean-5)
+  );
+  filter: url(#slime-distort) blur(14px);
+  opacity: 0;
+  animation: cta-morph-2 5s ease-in-out infinite,
+             cta-drift-2 7s ease-in-out infinite,
+             cta-rotate-reverse 4s linear infinite;
+}
+
+/* Layer 3 — deep glow, widest spread */
+.cta-fluid-border--3 {
+  inset: -14px;
+  background: conic-gradient(
+    from calc(var(--cta-angle, 0deg) + 240deg),
+    var(--ocean-2),
+    var(--ocean-4),
+    var(--ocean-5),
+    var(--ocean-3),
+    var(--ocean-1),
+    var(--ocean-3),
+    var(--ocean-5),
+    var(--ocean-4),
+    var(--ocean-2)
+  );
+  filter: url(#slime-distort) blur(28px);
+  opacity: 0;
+  animation: cta-morph-3 6s ease-in-out infinite,
+             cta-drift-3 8s ease-in-out infinite,
+             cta-rotate 5s linear infinite;
+}
+
+/* Hover — reveal fluid, kill it on the button */
+.cta-button-wrap:hover .cta-fluid-border {
+  opacity: 1;
+}
+
+/* Inner button — stark, minimal */
+.cta-button {
+  position: relative;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.875rem 2.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg);
+  transition: border-color 0.3s ease-out, background 0.3s ease-out;
+}
+
+@media (min-width: 640px) {
+  .cta-button {
+    padding: 1rem 3rem;
+    font-size: 0.875rem;
+  }
+}
+
+.cta-button-wrap:hover .cta-button {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cta-button:active {
+  transform: scale(0.97);
+}
+
+/* Wide CTA — command-line input style */
+.cta-button-wrap--wide {
+  width: 100%;
+  max-width: 85%;
+}
+
+@media (min-width: 640px) {
+  .cta-button-wrap--wide {
+    max-width: 28rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .cta-button-wrap--wide {
+    max-width: 32rem;
+  }
+}
+
+.cta-button--wide {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.625rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .cta-button--wide {
+    padding: 0.75rem 2rem;
+  }
+}
+
+.cta-label {
+  flex-shrink: 0;
+}
+
+.cta-arrow {
+  margin-left: auto;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.cta-button-wrap:hover .cta-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* --- Fluid morph keyframes --- */
+
+/* Asymmetric border-radius morphing — amoeba shapes */
+@keyframes cta-morph-1 {
+  0%, 100% {
+    border-radius: 42% 58% 62% 38% / 45% 55% 45% 55%;
+  }
+  25% {
+    border-radius: 55% 45% 38% 62% / 60% 40% 60% 40%;
+  }
+  50% {
+    border-radius: 38% 62% 55% 45% / 42% 58% 42% 58%;
+  }
+  75% {
+    border-radius: 60% 40% 45% 55% / 55% 45% 55% 45%;
+  }
+}
+
+@keyframes cta-morph-2 {
+  0%, 100% {
+    border-radius: 55% 45% 42% 58% / 52% 48% 52% 48%;
+  }
+  33% {
+    border-radius: 40% 60% 58% 42% / 45% 55% 40% 60%;
+  }
+  66% {
+    border-radius: 62% 38% 50% 50% / 58% 42% 55% 45%;
+  }
+}
+
+@keyframes cta-morph-3 {
+  0%, 100% {
+    border-radius: 48% 52% 55% 45% / 50% 50% 50% 50%;
+  }
+  20% {
+    border-radius: 58% 42% 40% 60% / 42% 58% 48% 52%;
+  }
+  40% {
+    border-radius: 42% 58% 62% 38% / 55% 45% 42% 58%;
+  }
+  60% {
+    border-radius: 52% 48% 45% 55% / 38% 62% 58% 42%;
+  }
+  80% {
+    border-radius: 45% 55% 52% 48% / 62% 38% 45% 55%;
+  }
+}
+
+/* Organic drift — asymmetric scale wobble */
+@keyframes cta-drift {
+  0%, 100% { transform: scale(1)    rotate(0deg)   skewX(0deg); }
+  33%      { transform: scale(1.06) rotate(2deg)   skewX(1.5deg); }
+  66%      { transform: scale(0.96) rotate(-1.5deg) skewX(-1deg); }
+}
+
+@keyframes cta-drift-2 {
+  0%, 100% { transform: scale(1)    rotate(0deg)    skewY(0deg); }
+  40%      { transform: scale(1.08) rotate(-2.5deg) skewY(2deg); }
+  70%      { transform: scale(0.94) rotate(1deg)    skewY(-1.5deg); }
+}
+
+@keyframes cta-drift-3 {
+  0%, 100% { transform: scale(1)    rotate(0deg); }
+  50%      { transform: scale(1.1)  rotate(3deg); }
+}
+
+/* Conic rotation */
+@keyframes cta-rotate {
+  from { --cta-angle: 0deg; }
+  to   { --cta-angle: 360deg; }
+}
+
+@keyframes cta-rotate-reverse {
+  from { --cta-angle: 360deg; }
+  to   { --cta-angle: 0deg; }
+}
+
+@property --cta-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Thin horizontal rule */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 182, 162, 0.15), transparent);
+}
+
+/* Fade-in utility */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Exhibit image — respect reduced motion at CSS level as GSAP fallback */
+@media (prefers-reduced-motion: reduce) {
+  .exhibit-art {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobile cursor reset */
+@media (hover: none) and (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+  .cursor-dot,
+  .cursor-spotlight {
+    display: none !important;
+  }
 }
