@@ -15,12 +15,6 @@ export default function GridBackground() {
 
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // Skip canvas on touch-only devices
-    if (isTouchDevice) {
-      canvas.style.display = 'none';
-      return;
-    }
-
     let width = window.innerWidth;
     let height = window.innerHeight;
     const mouse = { x: width * 0.7, y: height * 0.4 };
@@ -28,7 +22,7 @@ export default function GridBackground() {
     let animId = 0;
     let paused = false;
 
-    const isMobile = false; // canvas is hidden on touch devices
+    const isMobile = isTouchDevice;
 
     const GRID_SIZE = 80;
     const NODE_RADIUS = 1.2;
@@ -71,14 +65,17 @@ export default function GridBackground() {
     const touchPos = { x: -999, y: -999, active: false };
     const touchTrails: { x: number; y: number; alpha: number }[] = [];
 
-    // --- Gyroscope ---
-    const gyro = { x: 0, y: 0 };
+    // --- Gyroscope — drives illumination source on mobile ---
+    const gyro = { x: width * 0.5, y: height * 0.4 };
     const onOrientation = (e: DeviceOrientationEvent) => {
       if (e.gamma !== null && e.beta !== null) {
+        // gamma: -90..90 (left/right tilt), beta: 0..180 (front/back tilt)
+        const targetX = ((e.gamma + 45) / 90) * width;
+        const targetY = ((e.beta - 20) / 120) * height;
         gsap.to(gyro, {
-          x: (e.gamma / 45) * 5,  // max ~5px
-          y: ((e.beta - 45) / 45) * 5,
-          duration: 1.0,
+          x: Math.max(0, Math.min(width, targetX)),
+          y: Math.max(0, Math.min(height, targetY)),
+          duration: 1.2,
           ease: 'power2.out',
           overwrite: true,
         });
@@ -135,9 +132,11 @@ export default function GridBackground() {
       ctx.clearRect(0, 0, width, height);
       ctx.save();
 
-      // Parallax: gyro on mobile, mouse drift on desktop
+      // Parallax: small gyro drift on mobile, mouse drift on desktop
       if (isMobile) {
-        ctx.translate(gyro.x, gyro.y);
+        const parallaxX = (gyro.x - width / 2) / width * -4;
+        const parallaxY = (gyro.y - height / 2) / height * -4;
+        ctx.translate(parallaxX, parallaxY);
       } else {
         ctx.translate(drift.x, drift.y);
       }
@@ -152,9 +151,13 @@ export default function GridBackground() {
       const revealRadius = reveal.value * maxDist * 1.2;
       const REVEAL_SOFTNESS = 60;
 
-      // Active illumination source: mouse on desktop, touch on mobile
-      const illumX = isMobile && touchPos.active ? touchPos.x : mouse.x;
-      const illumY = isMobile && touchPos.active ? touchPos.y : mouse.y;
+      // Active illumination source: mouse on desktop, gyro/touch on mobile
+      const illumX = isMobile
+        ? (touchPos.active ? touchPos.x : gyro.x)
+        : mouse.x;
+      const illumY = isMobile
+        ? (touchPos.active ? touchPos.y : gyro.y)
+        : mouse.y;
 
       ctx.lineWidth = 1;
 
@@ -264,8 +267,8 @@ export default function GridBackground() {
         }
       }
 
-      // Mouse / touch glow
-      if (isMobile ? touchPos.active : true) {
+      // Mouse / touch / gyro glow
+      {
         const glow = ctx.createRadialGradient(illumX, illumY, 0, illumX, illumY, PROXIMITY_RADIUS * 0.8);
         glow.addColorStop(0, 'rgba(200, 182, 162, 0.04)');
         glow.addColorStop(1, 'rgba(200, 182, 162, 0)');
@@ -337,7 +340,18 @@ export default function GridBackground() {
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd);
     if (isMobile && typeof DeviceOrientationEvent !== 'undefined') {
-      window.addEventListener('deviceorientation', onOrientation);
+      // iOS 13+ requires permission
+      if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+        (DeviceOrientationEvent as any).requestPermission()
+          .then((state: string) => {
+            if (state === 'granted') {
+              window.addEventListener('deviceorientation', onOrientation);
+            }
+          })
+          .catch(() => {});
+      } else {
+        window.addEventListener('deviceorientation', onOrientation);
+      }
     }
 
     return () => {
