@@ -4,11 +4,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
-import dynamic from 'next/dynamic';
 
-const CalEmbed = dynamic(() => import('./CalEmbed'), { ssr: false });
-
-type FormState = 'idle' | 'submitting' | 'scheduled';
+type FormState = 'idle' | 'submitting' | 'sent';
 
 export default function TerminalClose() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -77,7 +74,6 @@ export default function TerminalClose() {
           _subject: `New Discovery Request — ${formData.name}`,
           _captcha: 'false',
           _template: 'box',
-          _confirmation: `Hi ${formData.name},\n\nThanks for reaching out. I've received your project notes and will be in touch shortly.\n\nIn the meantime, you can schedule a discovery call directly:\nhttps://cal.com/acaditya10/discovery\n\n— Aditya, Vortex Labs`,
           name: formData.name,
           email: formData.email,
           projectType: formData.projectType,
@@ -86,7 +82,7 @@ export default function TerminalClose() {
       });
 
       if (res.ok) {
-        setFormState('scheduled');
+        setFormState('sent');
       } else {
         setFormState('idle');
       }
@@ -94,6 +90,8 @@ export default function TerminalClose() {
       setFormState('idle');
     }
   };
+
+  const calLink = `https://cal.com/acaditya10/discovery?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&notes=${encodeURIComponent(`[${formData.projectType}] ${formData.notes}`)}`;
 
   return (
     <section
@@ -107,7 +105,7 @@ export default function TerminalClose() {
           ref={promptRef}
           className="text-[clamp(2.5rem,9vw,8rem)] font-bold leading-[0.92] tracking-[-0.04em] text-[var(--fg)] opacity-0"
         >
-          {formState === 'scheduled' ? 'One more step.' : 'Commission a Build.'}
+          {formState === 'sent' ? 'Noted.' : 'Commission a Build.'}
         </h2>
 
         {/* Pricing Anchor */}
@@ -115,13 +113,12 @@ export default function TerminalClose() {
           ref={pricingRef}
           className="mt-8 max-w-2xl text-sm font-light leading-relaxed tracking-wide text-[var(--fg-muted)] sm:text-base opacity-0"
         >
-          {formState === 'scheduled'
-            ? 'Book a 30-minute discovery call. No pitch — just a focused technical conversation about your project.'
+          {formState === 'sent'
+            ? 'Thanks for reaching out. I\'ll be in touch shortly.'
             : 'Have a website worth building? Tell me what you\'re working on and what you want the experience to become.'}
         </p>
 
-        {/* The Form */}
-        {formState !== 'scheduled' ? (
+        {formState !== 'sent' ? (
           <form
             ref={formRef}
             className="mt-14 max-w-xl space-y-6 sm:mt-20 opacity-0"
@@ -236,39 +233,35 @@ export default function TerminalClose() {
             </div>
           </form>
         ) : (
-          /* Scheduling View */
-          (() => {
-            const calNotes = `[${formData.projectType}] ${formData.notes}`;
-            const calLink = `acaditya10/discovery`;
-
-            return (
-              <div className="mt-14 sm:mt-20">
-                {/* Cal.com Themed Embed */}
-                <div className="rounded-none border border-white/[0.06] bg-[#0A0A0A] p-0">
-                  <CalEmbed
-                    calLink={calLink}
-                    name={formData.name}
-                    email={formData.email}
-                    notes={calNotes}
-                  />
-                </div>
-
-                {/* Back Button */}
-                <div className="mt-8">
-                  <button
-                    onClick={() => {
-                      setFormState('idle');
-                      setFormData({ name: '', email: '', projectType: '', notes: '' });
-                    }}
-                    data-cursor-hover
-                    className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)] outline-none transition-colors hover:text-[var(--fg-muted)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
-                  >
-                    ← BACK TO FORM
-                  </button>
-                </div>
-              </div>
-            );
-          })()
+          /* Sent View */
+          <div className="mt-14 sm:mt-20">
+            <p className="text-sm font-light leading-relaxed text-[var(--fg-muted)] sm:text-base">
+              Or schedule a call directly — no form needed.
+            </p>
+            <a
+              href={calLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor-hover
+              className="mt-6 inline-flex items-baseline font-mono text-xs tracking-[0.2em] text-white outline-none transition-colors duration-300 hover:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+            >
+              [ SCHEDULE A CALL{' '}
+              <span className="inline-block transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5">
+                ↗
+              </span>{' '}
+              ]
+            </a>
+            <button
+              onClick={() => {
+                setFormState('idle');
+                setFormData({ name: '', email: '', projectType: '', notes: '' });
+              }}
+              data-cursor-hover
+              className="ml-6 font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)] outline-none transition-colors hover:text-[var(--fg-muted)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+            >
+              ← SEND ANOTHER
+            </button>
+          </div>
         )}
 
         {/* Footer Bar */}
