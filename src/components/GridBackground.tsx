@@ -8,16 +8,15 @@ export default function GridBackground() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || typeof window === 'undefined') return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    const isLowEnd = (navigator.hardwareConcurrency ?? 4) <= 4;
 
-    // Skip canvas entirely on low-end or touch-only devices
-    if (isTouchDevice || isLowEnd) {
+    // Skip canvas on touch-only devices
+    if (isTouchDevice) {
       canvas.style.display = 'none';
       return;
     }
