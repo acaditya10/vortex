@@ -108,8 +108,8 @@ body {
 /* Custom cursor dot */
 .cursor-dot {
   position: fixed;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background: var(--accent);
   border-radius: 50%;
   pointer-events: none;
@@ -121,7 +121,7 @@ body {
 }
 
 .cursor-dot.is-hovering {
-  transform: translate(-50%, -50%) scale(6);
+  transform: translate(-50%, -50%) scale(7);
   background: rgba(200, 182, 162, 0.15);
   border: 1px solid rgba(200, 182, 162, 0.3);
 }
@@ -394,6 +394,16 @@ body {
 .divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(200, 182, 162, 0.15), transparent);
+}
+
+/* Agitator — breathing accent words */
+@keyframes agitator-pulse {
+  0%, 100% { color: var(--accent); }
+  50% { color: var(--accent-hover); }
+}
+
+.fluid-accent {
+  animation: agitator-pulse 3s ease-in-out infinite;
 }
 
 /* Fade-in utility */

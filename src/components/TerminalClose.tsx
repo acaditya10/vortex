@@ -227,6 +227,9 @@ export default function TerminalClose() {
                   </>
                 )}
               </button>
+              <p className="mt-5 font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)]">
+                [ INVESTMENT ] SCOPED PER PROJECT AT DISCOVERY — NO GENERIC PACKAGES
+              </p>
             </div>
           </form>
         ) : (
@@ -312,12 +315,30 @@ export default function TerminalClose() {
         )}
 
         {/* Footer Bar */}
-        <div className="mt-32 border-t border-white/5 pt-8 sm:mt-40">
-          <div className="flex items-center justify-between gap-4 text-[9px] font-mono tracking-wider text-[var(--fg-dim)] sm:text-[10px] md:text-[11px]">
+        <footer className="mt-32 border-t border-white/5 pt-8 sm:mt-40">
+          <div className="flex flex-col gap-6 text-[9px] font-mono tracking-wider text-[var(--fg-dim)] sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-[10px] md:text-[11px]">
             <span>IMMERSIVE DIGITAL EXPERIENCES / VORTEX LABS</span>
-            <span>&copy; {new Date().getFullYear()}</span>
+            <div className="flex items-center gap-8">
+              <a
+                href="mailto:hi@acaditya10.tech"
+                data-cursor-hover
+                className="outline-none transition-colors duration-300 hover:text-[var(--fg-muted)] focus-visible:text-[var(--fg-muted)]"
+              >
+                [ EMAIL ↗ ]
+              </a>
+              <a
+                href="https://github.com/acaditya10"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor-hover
+                className="outline-none transition-colors duration-300 hover:text-[var(--fg-muted)] focus-visible:text-[var(--fg-muted)]"
+              >
+                [ GITHUB ↗ ]
+              </a>
+            </div>
+            <span>INDIA · REMOTE-FIRST — &copy; {new Date().getFullYear()}</span>
           </div>
-        </div>
+        </footer>
       </div>
     </section>
   );

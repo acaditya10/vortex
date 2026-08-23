@@ -59,7 +59,7 @@ export default function CustomCursor() {
       spotlightPos.current.y += sy * 0.12;
 
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${dotPos.current.x - 4}px, ${dotPos.current.y - 4}px)`;
+        dotRef.current.style.transform = `translate(${dotPos.current.x - 3}px, ${dotPos.current.y - 3}px)`;
       }
       if (spotlightRef.current) {
         spotlightRef.current.style.transform = `translate(${spotlightPos.current.x - 160}px, ${spotlightPos.current.y - 160}px)`;

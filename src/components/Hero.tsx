@@ -141,12 +141,16 @@ export default function Hero() {
         <div className="hidden text-[11px] font-mono tracking-wide text-[var(--fg-muted)] lg:block">
           Independent design &amp; engineering studio by Aditya Chandra.
         </div>
-        <div className="hidden items-center gap-6 text-[11px] font-mono tracking-wider text-[var(--fg-dim)] sm:flex sm:gap-8">
+        <div className="hidden items-center gap-6 text-[11px] font-mono tracking-wider text-[var(--fg-dim)] xl:flex">
           <a href="#work" className="transition-colors hover:text-[var(--fg-muted)]" data-cursor-hover>WORK</a>
           <span className="text-[var(--fg-dim)]">·</span>
           <a href="#capabilities" className="transition-colors hover:text-[var(--fg-muted)]" data-cursor-hover>CAPABILITIES</a>
           <span className="text-[var(--fg-dim)]">·</span>
+          <a href="#process" className="transition-colors hover:text-[var(--fg-muted)]" data-cursor-hover>PROCESS</a>
+          <span className="text-[var(--fg-dim)]">·</span>
           <a href="#about" className="transition-colors hover:text-[var(--fg-muted)]" data-cursor-hover>ABOUT</a>
+          <span className="text-[var(--fg-dim)]">·</span>
+          <a href="#faq" className="transition-colors hover:text-[var(--fg-muted)]" data-cursor-hover>FAQ</a>
           <span className="text-[var(--fg-dim)]">·</span>
           <a href="#contact" className="text-[var(--fg-muted)] transition-colors hover:text-[var(--fg)]" data-cursor-hover>[ CONTACT → ]</a>
         </div>
@@ -154,7 +158,7 @@ export default function Hero() {
 
       {/* Mobile menu toggle — fixed above overlay */}
       <button
-        className="fixed right-6 top-6 z-50 flex flex-col gap-1.5 sm:hidden"
+        className="fixed right-6 top-6 z-50 flex flex-col gap-1.5 xl:hidden"
         onClick={() => setMenuOpen(!menuOpen)}
         aria-label={menuOpen ? 'Close menu' : 'Open menu'}
         data-cursor-hover
@@ -165,10 +169,12 @@ export default function Hero() {
       </button>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-40 flex flex-col items-start justify-center gap-10 bg-[var(--bg)] px-10 transition-opacity duration-300 sm:hidden ${menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}>
+      <div className={`fixed inset-0 z-40 flex flex-col items-start justify-center gap-8 bg-[var(--bg)] px-10 transition-opacity duration-300 xl:hidden ${menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}>
         <a href="#work" className="font-mono text-lg tracking-[0.15em] text-[var(--fg-muted)]" onClick={() => setMenuOpen(false)} data-cursor-hover>WORK</a>
         <a href="#capabilities" className="font-mono text-lg tracking-[0.15em] text-[var(--fg-muted)]" onClick={() => setMenuOpen(false)} data-cursor-hover>CAPABILITIES</a>
+        <a href="#process" className="font-mono text-lg tracking-[0.15em] text-[var(--fg-muted)]" onClick={() => setMenuOpen(false)} data-cursor-hover>PROCESS</a>
         <a href="#about" className="font-mono text-lg tracking-[0.15em] text-[var(--fg-muted)]" onClick={() => setMenuOpen(false)} data-cursor-hover>ABOUT</a>
+        <a href="#faq" className="font-mono text-lg tracking-[0.15em] text-[var(--fg-muted)]" onClick={() => setMenuOpen(false)} data-cursor-hover>FAQ</a>
         <a href="#contact" className="font-mono text-lg tracking-[0.15em] text-[var(--fg)]" onClick={() => setMenuOpen(false)} data-cursor-hover>[ CONTACT → ]</a>
       </div>
 
