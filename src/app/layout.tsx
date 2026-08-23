@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
-import "@calcom/embed-core/styles.css";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -44,49 +43,54 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script src="https://app.cal.com/embed/embed.js" async defer />
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function() {
-                try {
-                  var C = window.Cal;
-                  if (!C) return;
-                  C("init", "acaditya10", { origin: "https://cal.com" });
-                  C("ui", {
-                    theme: "dark",
-                    hideEventTypeDetails: false,
-                    layout: "month_view",
-                    useSlotsViewOnSmallScreen: true,
-                    cssVarsPerTheme: {
-                      dark: {
-                        "cal-brand": "#C8B6A2",
-                        "cal-brand-emphasis": "#DED0C2",
-                        "cal-brand-text": "#0A0A0A",
-                        "cal-brand-subtle": "#8A8580",
-                        "cal-brand-accent": "#0A0A0A",
-                        "cal-text": "#8A8580",
-                        "cal-text-emphasis": "#E8E4DE",
-                        "cal-text-subtle": "#6B6560",
-                        "cal-text-muted": "#4A4744",
-                        "cal-text-inverted": "#0A0A0A",
-                        "cal-bg": "#0A0A0A",
-                        "cal-bg-emphasis": "#1A1A1A",
-                        "cal-bg-subtle": "#141414",
-                        "cal-bg-muted": "#111111",
-                        "cal-bg-inverted": "#E8E4DE",
-                        "cal-border": "rgba(255,255,255,0.08)",
-                        "cal-border-emphasis": "rgba(255,255,255,0.15)",
-                        "cal-border-subtle": "rgba(255,255,255,0.06)",
-                        "cal-border-muted": "rgba(255,255,255,0.04)",
-                        "cal-border-booker": "rgba(255,255,255,0.08)",
-                        "cal-border-booker-width": "1px",
-                        "radius": "0px",
-                        "spacing": "1rem",
-                      },
+              window.__CAL_INIT__ = window.__CAL_INIT__ || [];
+              function initCal() {
+                var C = window.Cal;
+                if (!C) { window.__CAL_INIT__.push(initCal); return; }
+                C("init", "acaditya10", { origin: "https://cal.com" });
+                C("ui", {
+                  theme: "dark",
+                  hideEventTypeDetails: false,
+                  layout: "month_view",
+                  useSlotsViewOnSmallScreen: true,
+                  cssVarsPerTheme: {
+                    dark: {
+                      "cal-brand": "#C8B6A2",
+                      "cal-brand-emphasis": "#DED0C2",
+                      "cal-brand-text": "#0A0A0A",
+                      "cal-brand-subtle": "#8A8580",
+                      "cal-brand-accent": "#0A0A0A",
+                      "cal-text": "#8A8580",
+                      "cal-text-emphasis": "#E8E4DE",
+                      "cal-text-subtle": "#6B6560",
+                      "cal-text-muted": "#4A4744",
+                      "cal-text-inverted": "#0A0A0A",
+                      "cal-bg": "#0A0A0A",
+                      "cal-bg-emphasis": "#1A1A1A",
+                      "cal-bg-subtle": "#141414",
+                      "cal-bg-muted": "#111111",
+                      "cal-bg-inverted": "#E8E4DE",
+                      "cal-border": "rgba(255,255,255,0.08)",
+                      "cal-border-emphasis": "rgba(255,255,255,0.15)",
+                      "cal-border-subtle": "rgba(255,255,255,0.06)",
+                      "cal-border-muted": "rgba(255,255,255,0.04)",
+                      "cal-border-booker": "rgba(255,255,255,0.08)",
+                      "cal-border-booker-width": "1px",
+                      "radius": "0px",
+                      "spacing": "1rem",
                     },
-                  });
-                } catch (e) {}
-              })();
+                  },
+                });
+              }
+              if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", initCal);
+              } else {
+                initCal();
+              }
             `,
           }}
         />
