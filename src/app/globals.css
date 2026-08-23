@@ -430,3 +430,24 @@ body {
     display: none !important;
   }
 }
+
+/* Cal.com embed overrides */
+.cal-embed-wrapper {
+  width: 100%;
+  min-height: 680px;
+}
+
+.cal-embed-wrapper iframe {
+  width: 100% !important;
+  min-height: 680px !important;
+  border: none !important;
+}
+
+@media (min-width: 640px) {
+  .cal-embed-wrapper {
+    min-height: 750px;
+  }
+  .cal-embed-wrapper iframe {
+    min-height: 750px !important;
+  }
+}

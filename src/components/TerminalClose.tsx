@@ -4,6 +4,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
+import dynamic from 'next/dynamic';
+
+const CalEmbed = dynamic(() => import('./CalEmbed'), { ssr: false });
 
 type FormState = 'idle' | 'submitting' | 'scheduled';
 
@@ -235,62 +238,23 @@ export default function TerminalClose() {
         ) : (
           /* Scheduling View */
           (() => {
-            const calParams = new URLSearchParams({
-              embed: 'true',
-              layout: 'month_view',
-              theme: 'dark',
-              name: formData.name,
-              email: formData.email,
-              notes: `[${formData.projectType}] ${formData.notes}`,
-            });
-            const calParamsLink = new URLSearchParams({
-              name: formData.name,
-              email: formData.email,
-              notes: `[${formData.projectType}] ${formData.notes}`,
-            });
-            const calEmbed = `https://cal.com/acaditya10/discovery?${calParams.toString()}`;
-            const calLink = `https://cal.com/acaditya10/discovery?${calParamsLink.toString()}`;
+            const calNotes = `[${formData.projectType}] ${formData.notes}`;
+            const calLink = `acaditya10/discovery`;
 
             return (
               <div className="mt-14 sm:mt-20">
-                {/* Cal.com Embed */}
-                <div
-                  className="w-full overflow-hidden rounded-lg border border-white/10 bg-[#0C0C0C]"
-                  style={{ minHeight: '680px' }}
-                >
-                  <iframe
-                    src={calEmbed}
-                    className="h-[680px] w-full"
-                    frameBorder="0"
-                    scrolling="no"
-                    title="Schedule a discovery call"
+                {/* Cal.com Themed Embed */}
+                <div className="rounded-none border border-white/[0.06] bg-[#0A0A0A] p-0">
+                  <CalEmbed
+                    calLink={calLink}
+                    name={formData.name}
+                    email={formData.email}
+                    notes={calNotes}
                   />
                 </div>
 
-                {/* Manual Link */}
-                <div className="mt-6 flex items-center gap-4">
-                  <div className="h-px flex-1 bg-white/5" />
-                  <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)]">
-                    OR
-                  </span>
-                  <div className="h-px flex-1 bg-white/5" />
-                </div>
-
-                <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <a
-                    href={calLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-cursor-hover
-                    className="group/btn inline-flex items-baseline font-mono text-xs tracking-[0.2em] text-white outline-none transition-colors duration-300 hover:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-                  >
-                    [ OPEN IN CALENDAR{' '}
-                    <span className="inline-block transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5">
-                      ↗
-                    </span>{' '}
-                    ]
-                  </a>
-
+                {/* Back Button */}
+                <div className="mt-8">
                   <button
                     onClick={() => {
                       setFormState('idle');
@@ -302,13 +266,6 @@ export default function TerminalClose() {
                     ← BACK TO FORM
                   </button>
                 </div>
-
-                {/* Confirmation Notice */}
-                <p className="mt-8 max-w-xl text-xs font-light leading-relaxed text-[var(--fg-dim)]">
-                  A confirmation email has been sent to{' '}
-                  <span className="text-[var(--fg-muted)]">{formData.email}</span> with
-                  your project details and the scheduling link.
-                </p>
               </div>
             );
           })()
