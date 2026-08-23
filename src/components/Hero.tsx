@@ -35,8 +35,7 @@ export default function Hero() {
   const navRef = useRef<HTMLElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
-  const ctaTextRef = useRef<HTMLButtonElement>(null);
-  const tickerRef = useRef<HTMLDivElement>(null);
+  const ctaTextRef = useRef<HTMLSpanElement>(null);
 
   const defaultCTA = '[ START A BUILD ]';
   const hoverCTA = '[ START A BUILD ]';
@@ -111,16 +110,6 @@ export default function Hero() {
         { opacity: 1, y: 0, duration: 0.4 },
         ENV_DELAY + 0.35
       );
-
-      // Ticker
-      if (tickerRef.current) {
-        tl.fromTo(
-          tickerRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.5 },
-          ENV_DELAY + 0.45
-        );
-      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -217,8 +206,9 @@ export default function Hero() {
 
         {/* CTA — Command-line style */}
         <div ref={ctaRef} className="mt-10 opacity-0 sm:mt-12">
-          <div
-            className="cta-button-wrap cta-button-wrap--wide w-full"
+          <a
+            href="#contact"
+            className="cta-button-wrap cta-button-wrap--wide w-full block"
             data-cursor-hover
             onMouseEnter={onCTAEnter}
             onMouseLeave={onCTALeave}
@@ -226,20 +216,13 @@ export default function Hero() {
             <div className="cta-fluid-border cta-fluid-border--1" />
             <div className="cta-fluid-border cta-fluid-border--2" />
             <div className="cta-fluid-border cta-fluid-border--3" />
-            <button className="cta-button cta-button--wide" ref={ctaTextRef}>
+            <span className="cta-button cta-button--wide" ref={ctaTextRef}>
               <span className="cta-label">{defaultCTA}</span>
               <span className="cta-arrow">→</span>
-            </button>
-          </div>
+            </span>
+          </a>
         </div>
 
-        {/* Client Ticker */}
-        <div
-          ref={tickerRef}
-          className="mt-10 text-[9px] font-mono tracking-[0.12em] text-[var(--fg-muted)] opacity-0 sm:mt-12 sm:text-[10px] md:mt-16 md:text-[11px]"
-        >
-          SELECTED / UPMARK MEDIA · WINIT MEDIA · PRIVATE CLIENTS
-        </div>
       </div>
 
       {/* Stats rail — desktop only */}

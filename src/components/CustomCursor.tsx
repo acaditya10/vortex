@@ -46,17 +46,15 @@ export default function CustomCursor() {
       }
     };
 
-    // Single rAF loop — lerp dot toward mouse, spotlight trails further behind
+    // Single rAF loop — dot tracks instantly, spotlight trails behind
     const tick = () => {
-      const dx = mouse.current.x - dotPos.current.x;
-      const dy = mouse.current.y - dotPos.current.y;
-      dotPos.current.x += dx * 0.35;
-      dotPos.current.y += dy * 0.35;
+      dotPos.current.x = mouse.current.x;
+      dotPos.current.y = mouse.current.y;
 
       const sx = mouse.current.x - spotlightPos.current.x;
       const sy = mouse.current.y - spotlightPos.current.y;
-      spotlightPos.current.x += sx * 0.12;
-      spotlightPos.current.y += sy * 0.12;
+      spotlightPos.current.x += sx * 0.15;
+      spotlightPos.current.y += sy * 0.15;
 
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${dotPos.current.x - 3}px, ${dotPos.current.y - 3}px)`;
