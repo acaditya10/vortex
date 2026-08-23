@@ -41,6 +41,7 @@ export default function CalEmbed({
           elementOrSelector: containerRef.current,
           calLink,
           layout: 'month_view',
+          useSlotsViewOnSmallScreen: true,
           prefill: {
             ...(name ? { name } : {}),
             ...(email ? { email } : {}),
@@ -52,6 +53,7 @@ export default function CalEmbed({
           theme: 'dark',
           hideEventTypeDetails: false,
           layout: 'month_view',
+          useSlotsViewOnSmallScreen: true,
           cssVarsPerTheme: {
             dark: {
               'cal-brand': '#C8B6A2',
@@ -105,6 +107,7 @@ export default function CalEmbed({
       ref={containerRef}
       id="cal-inline-target"
       className="cal-embed-wrapper"
+      style={{ touchAction: 'manipulation' }}
     />
   );
 }

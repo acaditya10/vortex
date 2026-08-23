@@ -56,6 +56,7 @@ export default function RootLayout({
                     theme: "dark",
                     hideEventTypeDetails: false,
                     layout: "month_view",
+                    useSlotsViewOnSmallScreen: true,
                     cssVarsPerTheme: {
                       dark: {
                         "cal-brand": "#C8B6A2",
