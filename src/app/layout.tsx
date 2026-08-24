@@ -124,8 +124,9 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-SXTGB1D8LJ', {
-              page_title: document.title,
-              page_location: window.location.href,
+              send_page_view: true,
+              cookie_domain: 'getvortexlabs.com',
+              cookie_flags: 'SameSite=None;Secure',
             });
           `}
         </Script>
