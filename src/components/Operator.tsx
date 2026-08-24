@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -37,6 +37,7 @@ export default function Operator() {
   const nameRef = useRef<HTMLParagraphElement>(null);
   const photoBoxRef = useRef<HTMLDivElement>(null);
   const scrambling = useRef(false);
+  const [portraitRevealed, setPortraitRevealed] = useState(false);
 
   useBrowserEffect(() => {
     const section = sectionRef.current;
@@ -248,13 +249,20 @@ export default function Operator() {
         >
           <div className="group/portrait" data-op-portrait style={{ perspective: '750px' }}>
             <div ref={photoBoxRef} className="will-change-transform">
-              <div className="relative aspect-[3/4] w-full overflow-hidden">
+              <div
+                className="relative aspect-[3/4] w-full overflow-hidden cursor-pointer"
+                onClick={() => setPortraitRevealed(!portraitRevealed)}
+              >
                 <Image
                   src="/portrait.png"
                   alt="Aditya Chandra — founder and engineer behind Vortex Labs"
                   fill
                   sizes="(max-width: 1024px) 100vw, 420px"
-                  className="object-cover object-top grayscale contrast-[1.04] brightness-[0.85] transition-[filter] duration-500 ease-out group-hover/portrait:grayscale-0 group-hover/portrait:brightness-100 [-webkit-mask-image:radial-gradient(120%_105%_at_52%_35%,black_42%,transparent_90%)] [mask-image:radial-gradient(120%_105%_at_52%_35%,black_42%,transparent_90%)]"
+                  className={`object-cover object-top transition-[filter] duration-500 ease-out [-webkit-mask-image:radial-gradient(120%_105%_at_52%_35%,black_42%,transparent_90%)] [mask-image:radial-gradient(120%_105%_at_52%_35%,black_42%,transparent_90%)] ${
+                    portraitRevealed
+                      ? 'grayscale-0 brightness-100'
+                      : 'grayscale contrast-[1.04] brightness-[0.85] group-hover/portrait:grayscale-0 group-hover/portrait:brightness-100'
+                  }`}
                 />
                 <div
                   aria-hidden="true"

@@ -220,6 +220,26 @@ export default function Hero() {
             data-cursor-hover
             onMouseEnter={onCTAEnter}
             onMouseLeave={onCTALeave}
+            onClick={(e) => {
+              e.preventDefault();
+
+              const mainContent = sectionRef.current?.querySelector('.flex.flex-1.flex-col');
+              if (!mainContent) return;
+
+              gsap.to(mainContent, {
+                opacity: 0,
+                y: -30,
+                duration: 0.5,
+                ease: 'power2.in',
+                onComplete: () => {
+                  const target = document.getElementById('contact');
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                  }
+                  gsap.set(mainContent, { opacity: 1, y: 0 });
+                },
+              });
+            }}
           >
             <div className="cta-fluid-border cta-fluid-border--1" />
             <div className="cta-fluid-border cta-fluid-border--2" />

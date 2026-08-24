@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -35,6 +35,7 @@ export default function Exhibit({
 }: ExhibitProps) {
   const dossierRef = useRef<HTMLDivElement>(null);
   const artRef = useRef<HTMLDivElement>(null);
+  const [imageRevealed, setImageRevealed] = useState(false);
 
   useBrowserEffect(() => {
     const mm = gsap.matchMedia();
@@ -134,6 +135,7 @@ export default function Exhibit({
             <div
               ref={artRef}
               className="exhibit-art mx-auto w-full max-w-[720px] border border-gray-800 bg-[#0C0C0C] overflow-hidden will-change-transform transition-colors duration-500 group-hover/exhibit:border-white/25"
+              onClick={() => setImageRevealed(!imageRevealed)}
             >
               <Image
                 src={imageSrc}
@@ -143,7 +145,11 @@ export default function Exhibit({
                 sizes="(max-width: 1024px) 100vw, 720px"
                 placeholder="blur"
                 blurDataURL="data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAEfQ//g=="
-                className="block h-auto w-full grayscale-[0.6] brightness-90 transition-[filter] duration-500 ease-out group-hover/exhibit:grayscale-0 group-hover/exhibit:brightness-100"
+                className={`block h-auto w-full transition-[filter] duration-500 ease-out ${
+                  imageRevealed
+                    ? 'grayscale-0 brightness-100'
+                    : 'grayscale-[0.6] brightness-90 group-hover/exhibit:grayscale-0 group-hover/exhibit:brightness-100'
+                }`}
               />
             </div>
           </div>

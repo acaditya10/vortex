@@ -14,7 +14,7 @@ export default function TerminalClose() {
   const pricingRef = useRef<HTMLParagraphElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [formState, setFormState] = useState<FormState>('idle');
-  const [formData, setFormData] = useState({ name: '', email: '', projectType: '', notes: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', notes: '' });
 
   useBrowserEffect(() => {
     const section = sectionRef.current;
@@ -87,7 +87,6 @@ export default function TerminalClose() {
           _template: 'box',
           name: formData.name,
           email: formData.email,
-          projectType: formData.projectType,
           notes: formData.notes,
         }),
       });
@@ -102,7 +101,7 @@ export default function TerminalClose() {
     }
   };
 
-  const calLink = `https://cal.com/acaditya10/discovery?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&notes=${encodeURIComponent(`[${formData.projectType}] ${formData.notes}`)}`;
+  const calLink = `https://cal.com/acaditya10/discovery?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&notes=${encodeURIComponent(formData.notes)}`;
 
   return (
     <section
@@ -188,29 +187,6 @@ export default function TerminalClose() {
 
             <div>
               <label
-                htmlFor="projectType"
-                className="mb-2 block font-mono text-[10px] tracking-[0.25em] text-[var(--fg-muted)]"
-              >
-                PROJECT TYPE
-              </label>
-              <select
-                id="projectType"
-                name="projectType"
-                required
-                value={formData.projectType}
-                onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                className="w-full border-b border-white/20 bg-transparent py-3 text-sm font-light tracking-wide text-[var(--fg)] outline-none transition-colors focus:border-[var(--accent)] sm:text-base [&>option]:bg-[var(--bg)] [&>option]:text-[var(--fg)]"
-              >
-                <option value="" disabled>Select a project type</option>
-                <option value="new-website">New Website</option>
-                <option value="website-redesign">Website Redesign</option>
-                <option value="e-commerce">E-Commerce</option>
-                <option value="digital-experience">Digital Experience</option>
-              </select>
-            </div>
-
-            <div>
-              <label
                 htmlFor="notes"
                 className="mb-2 block font-mono text-[10px] tracking-[0.25em] text-[var(--fg-muted)]"
               >
@@ -274,7 +250,7 @@ export default function TerminalClose() {
             <button
               onClick={() => {
                 setFormState('idle');
-                setFormData({ name: '', email: '', projectType: '', notes: '' });
+                setFormData({ name: '', email: '', notes: '' });
               }}
               data-cursor-hover
               className="ml-6 font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)] outline-none transition-colors hover:text-[var(--fg-muted)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
