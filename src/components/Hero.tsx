@@ -1,6 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useEffect, useRef, useCallback, useState } from 'react';
+import Image from 'next/image';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
@@ -124,9 +125,16 @@ export default function Hero() {
     >
       {/* Navigation */}
       <nav ref={navRef} className="relative flex items-center justify-between opacity-0">
-        <div className="text-sm font-medium tracking-[0.2em] text-[var(--fg)] sm:text-base">
-          VORTEX LABS
-        </div>
+        <a href="/" className="relative block h-6 w-auto sm:h-7" data-cursor-hover>
+          <Image
+            src="/logo.png"
+            alt="Vortex Labs"
+            width={140}
+            height={28}
+            className="h-full w-auto"
+            priority
+          />
+        </a>
         <div className="hidden text-[11px] font-mono tracking-wide text-[var(--fg-muted)] lg:block">
           Independent design &amp; engineering studio by Aditya Chandra.
         </div>

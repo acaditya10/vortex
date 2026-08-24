@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
@@ -286,7 +287,16 @@ export default function TerminalClose() {
         {/* Footer Bar */}
         <footer className="mt-32 border-t border-white/5 pt-8 sm:mt-40">
           <div className="flex flex-col gap-6 text-[9px] font-mono tracking-wider text-[var(--fg-dim)] sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-[10px] md:text-[11px]">
-            <span>IMMERSIVE DIGITAL EXPERIENCES / VORTEX LABS</span>
+            <span className="flex items-center gap-3">
+              <span>IMMERSIVE DIGITAL EXPERIENCES /</span>
+              <Image
+                src="/logo.png"
+                alt="Vortex Labs"
+                width={80}
+                height={16}
+                className="h-3 w-auto opacity-60"
+              />
+            </span>
             <div className="flex items-center gap-8">
               <a
                 href="mailto:hi@acaditya10.tech"
