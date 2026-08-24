@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
+import WebVitals from "@/components/WebVitals";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -233,6 +235,8 @@ export default function RootLayout({
           Skip to content
         </a>
         <main className="flex-1 flex flex-col">{children}</main>
+        <AnalyticsTracker />
+        <WebVitals />
       </body>
     </html>
   );

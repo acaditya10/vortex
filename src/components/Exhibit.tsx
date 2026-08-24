@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { trackExhibitClick, trackExternalLink } from '@/lib/analytics';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
@@ -120,6 +121,7 @@ export default function Exhibit({
             rel="noopener noreferrer"
             data-cursor-hover
             className="group/cta mt-12 inline-flex items-baseline self-start font-mono text-xs tracking-[0.2em] text-white outline-none transition-colors duration-300 hover:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+            onClick={() => trackExternalLink(href, name)}
           >
             [ VISIT LIVE SITE{' '}
             <span className="inline-block transition-transform duration-300 group-hover/cta:-translate-y-0.5 group-hover/cta:translate-x-0.5">
@@ -147,9 +149,11 @@ export default function Exhibit({
                   } else {
                     videoRef.current?.play();
                     setVideoPlaying(true);
+                    trackExhibitClick(name, 'video_play');
                   }
                 } else {
                   setImageRevealed(!imageRevealed);
+                  trackExhibitClick(name, 'image_reveal');
                 }
               }}
             >

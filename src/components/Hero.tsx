@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useEffect, useRef, useCallback, useState } from 'react';
 import Image from 'next/image';
+import { trackCTAClick } from '@/lib/analytics';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
@@ -222,6 +223,7 @@ export default function Hero() {
             onMouseLeave={onCTALeave}
             onClick={(e) => {
               e.preventDefault();
+              trackCTAClick('hero');
 
               const mainContent = sectionRef.current?.querySelector('.flex.flex-1.flex-col');
               if (!mainContent) return;

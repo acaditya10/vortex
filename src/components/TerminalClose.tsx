@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { trackFormSubmit, trackFormError, trackScheduleClick, trackExternalLink } from '@/lib/analytics';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
@@ -93,11 +94,14 @@ export default function TerminalClose() {
 
       if (res.ok) {
         setFormState('sent');
+        trackFormSubmit();
       } else {
         setFormState('idle');
+        trackFormError('server_error');
       }
     } catch {
       setFormState('idle');
+      trackFormError('network_error');
     }
   };
 
@@ -240,6 +244,7 @@ export default function TerminalClose() {
               rel="noopener noreferrer"
               data-cursor-hover
               className="mt-6 inline-flex items-baseline font-mono text-xs tracking-[0.2em] text-white outline-none transition-colors duration-300 hover:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              onClick={() => trackScheduleClick('form_success')}
             >
               [ SCHEDULE A CALL{' '}
               <span className="inline-block transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5">
@@ -287,6 +292,7 @@ export default function TerminalClose() {
                 rel="noopener noreferrer"
                 data-cursor-hover
                 className="outline-none transition-colors duration-300 hover:text-[var(--fg-muted)] focus-visible:text-[var(--fg-muted)]"
+                onClick={() => trackExternalLink('https://github.com/acaditya10', 'GitHub')}
               >
                 [ GITHUB ↗ ]
               </a>
