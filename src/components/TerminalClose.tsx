@@ -66,6 +66,16 @@ export default function TerminalClose() {
     e.preventDefault();
     setFormState('submitting');
 
+    // Honeypot check — if filled, silently succeed (bots get tricked)
+    const form = formRef.current;
+    if (form) {
+      const honey = form.querySelector('input[name="_honey"]') as HTMLInputElement;
+      if (honey && honey.value) {
+        setFormState('sent');
+        return;
+      }
+    }
+
     try {
       const res = await fetch('https://formsubmit.co/ajax/hi@acaditya10.tech', {
         method: 'POST',
@@ -126,6 +136,15 @@ export default function TerminalClose() {
           >
             <input type="hidden" name="_captcha" value="false" />
             <input type="hidden" name="_template" value="box" />
+            {/* Honeypot — hidden from humans, bots will fill it */}
+            <input
+              type="text"
+              name="_honey"
+              tabIndex={-1}
+              autoComplete="off"
+              className="absolute opacity-0 pointer-events-none h-0 w-0"
+              aria-hidden="true"
+            />
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>

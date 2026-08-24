@@ -111,6 +111,8 @@ export default function Exhibit({
 
           <a
             href={href}
+            target="_blank"
+            rel="noopener noreferrer"
             data-cursor-hover
             className="group/cta mt-12 inline-flex items-baseline self-start font-mono text-xs tracking-[0.2em] text-white outline-none transition-colors duration-300 hover:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
           >

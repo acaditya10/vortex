@@ -1,11 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Geist, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 const SITE_URL = "https://getvortexlabs.com";
@@ -34,6 +40,11 @@ export const metadata: Metadata = {
     "custom web development",
     "e-commerce development",
     "UI/UX engineering",
+    "hire Next.js developer India",
+    "Shopify headless developer",
+    "web design freelancer India",
+    "GSAP animation developer",
+    "Next.js website agency",
   ],
   authors: [{ name: "Aditya Chandra", url: SITE_URL }],
   creator: "Aditya Chandra",
@@ -48,7 +59,7 @@ export const metadata: Metadata = {
       "Independent web design and engineering studio building premium websites and digital experiences for ambitious brands.",
     images: [
       {
-        url: "/og-image.png",
+        url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "Vortex Labs — Web Design & Engineering Studio",
@@ -61,7 +72,7 @@ export const metadata: Metadata = {
     title: "Vortex Labs — Web Design & Engineering Studio",
     description:
       "Independent web design and engineering studio building premium websites and digital experiences for ambitious brands.",
-    images: ["/og-image.png"],
+    images: [`${SITE_URL}/og-image.png`],
   },
   alternates: {
     canonical: SITE_URL,
@@ -94,12 +105,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
+    <html lang="en" className={`${geistSans.variable} ${jetbrainsMono.variable} h-full antialiased`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-        {/* Google Analytics 4 — replace G-SXTGB1D8LJ with your Measurement ID */}
+        {/* Google Analytics 4 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SXTGB1D8LJ"
           strategy="afterInteractive"
@@ -131,7 +139,6 @@ export default function RootLayout({
               description:
                 "Independent web design and engineering studio building premium websites and digital experiences for ambitious brands.",
               url: SITE_URL,
-              logo: `${SITE_URL}/logo.png`,
               founder: {
                 "@type": "Person",
                 name: "Aditya Chandra",
@@ -171,7 +178,7 @@ export default function RootLayout({
                   name: "How long does a build take?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Every project gets a concrete schedule at scope. Landing systems move fastest; full custom sites run longer depending on motion complexity and content readiness.",
+                    text: "Every project gets a concrete schedule at scope — and it holds. Landing systems move fastest; full custom sites run longer depending on motion complexity and content readiness. You'll know the timeline before committing, not after.",
                   },
                 },
                 {
@@ -179,7 +186,7 @@ export default function RootLayout({
                   name: "How do revisions work?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "You review high-fidelity design before a single component ships. During build, changes move fast because the designer and the developer are the same person.",
+                    text: "You review high-fidelity design before a single component ships, so iteration happens early — where it's cheap. During build, changes move fast for one reason: the designer and the developer are the same person. There is no telephone game.",
                   },
                 },
                 {
@@ -187,7 +194,7 @@ export default function RootLayout({
                   name: "Who owns the code?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "You do. Entirely. Repository, deployment pipeline, domain, analytics — everything transfers at handover with documentation. No lock-in.",
+                    text: "You do. Entirely. Repository, deployment pipeline, domain, analytics — everything transfers at handover with documentation. No lock-in. No proprietary platform. No hostage situation.",
                   },
                 },
                 {
@@ -195,7 +202,7 @@ export default function RootLayout({
                   name: "What happens after launch?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Launch ends the project, not the relationship. Structured care plans cover ongoing improvements; ad-hoc support handles everything else.",
+                    text: "Launch ends the project, not the relationship. Structured care plans cover ongoing improvements; ad-hoc support handles everything else. Either way, the person who built your site is the person who maintains it.",
                   },
                 },
                 {
@@ -203,7 +210,7 @@ export default function RootLayout({
                   name: "Why solo instead of an agency?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "One accountable operator means decisions happen in hours instead of standups, budgets go into craft instead of overhead — and the person designing your interface writes its production code.",
+                    text: "Agencies coordinate; I build. One accountable operator means decisions happen in hours instead of standups, budgets go into craft instead of overhead — and the person designing your interface writes its production code. That's not a limitation. It's the feature.",
                   },
                 },
                 {

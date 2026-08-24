@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -26,13 +25,19 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-border: var(--border);
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --font-sans: var(--font-geist-sans);
 }
 
 @media (pointer: fine) {
   * {
     cursor: none !important;
+  }
+}
+
+@media (scripting: none) {
+  * {
+    cursor: auto !important;
   }
 }
 
