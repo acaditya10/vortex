@@ -110,6 +110,16 @@ export default function Capabilities() {
           </div>
         ))}
       </div>
+
+      <div className="mt-10">
+        <a
+          href="#work"
+          data-cursor-hover
+          className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)] transition-colors hover:text-[var(--fg-muted)]"
+        >
+          SEE THESE IN ACTION →
+        </a>
+      </div>
     </section>
   );
 }

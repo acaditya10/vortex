@@ -221,9 +221,9 @@ export default function Operator() {
 
           <div data-op-copy className="mt-8 max-w-xl opacity-0">
             <p className="text-base font-light leading-[1.75] tracking-[0.01em] text-[#D0CBC5] sm:text-lg">
-              Vortex Labs is an independent design &amp; engineering studio<br />
-              based in India, working remotely with ambitious brands<br />
-              worldwide.
+              Vortex Labs is an independent web design &amp; engineering<br />
+              studio based in India, working remotely with ambitious<br />
+              brands worldwide.
             </p>
             <p className="mt-8 text-base font-light leading-[1.75] tracking-[0.01em] text-[#7A7570] sm:text-lg">
               I design and engineer the product myself &mdash;<br />
@@ -234,6 +234,9 @@ export default function Operator() {
               You work directly with the person building it.<br />
               No account managers. No dilution. Just clarity,<br />
               ownership and craft from start to finish.
+            </p>
+            <p className="mt-8 font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)]">
+              <a href="#capabilities" className="transition-colors hover:text-[var(--fg-muted)]" data-cursor-hover>VIEW CAPABILITIES →</a>
             </p>
           </div>
         </div>

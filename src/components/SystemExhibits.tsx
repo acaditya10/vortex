@@ -45,6 +45,17 @@ export default function SystemExhibits() {
         imageSrc="/um1.webp"
         imageAlt="Upmark Media content platform interface"
       />
+
+      {/* Cross-link to contact */}
+      <div className="border-t border-white/5 bg-[var(--bg)] px-6 py-12 sm:px-10 lg:pl-[7vw] lg:pr-[7vw]">
+        <a
+          href="#contact"
+          data-cursor-hover
+          className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)] transition-colors hover:text-[var(--fg-muted)]"
+        >
+          WANT SOMETHING LIKE THIS? START A BUILD →
+        </a>
+      </div>
     </section>
   );
 }
