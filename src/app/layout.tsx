@@ -99,9 +99,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID */}
+        {/* Google Analytics 4 — replace G-SXTGB1D8LJ with your Measurement ID */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          src="https://www.googletagmanager.com/gtag/js?id=G-SXTGB1D8LJ"
           strategy="afterInteractive"
         />
         <Script id="ga4-init" strategy="afterInteractive">
@@ -109,15 +109,15 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX', {
+            gtag('config', 'G-SXTGB1D8LJ', {
               page_title: document.title,
               page_location: window.location.href,
             });
           `}
         </Script>
 
-        {/* Google Search Console — replace with your verification code */}
-        <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
+        {/* Google Search Console — add your verification code here when ready */}
+        {/* <meta name="google-site-verification" content="YOUR_CODE" /> */}
       </head>
       <body className="min-h-full flex flex-col">
         {/* JSON-LD Structured Data */}
