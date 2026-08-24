@@ -125,12 +125,12 @@ export default function Hero() {
     >
       {/* Navigation */}
       <nav ref={navRef} className="relative flex items-center justify-between opacity-0">
-        <a href="/" className="relative block h-6 w-auto sm:h-7" data-cursor-hover>
+        <a href="/" className="relative block h-8 w-auto sm:h-10 md:h-12" data-cursor-hover>
           <Image
             src="/logo.png"
             alt="Vortex Labs"
-            width={140}
-            height={28}
+            width={200}
+            height={40}
             className="h-full w-auto"
             priority
           />
