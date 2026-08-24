@@ -17,6 +17,7 @@ export type ExhibitProps = {
   href: string;
   imageSrc: string;
   imageAlt: string;
+  videoSrc?: string;
   reversed?: boolean;
 };
 
@@ -31,11 +32,14 @@ export default function Exhibit({
   href,
   imageSrc,
   imageAlt,
+  videoSrc,
   reversed = false,
 }: ExhibitProps) {
   const dossierRef = useRef<HTMLDivElement>(null);
   const artRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [imageRevealed, setImageRevealed] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
 
   useBrowserEffect(() => {
     const mm = gsap.matchMedia();
@@ -135,8 +139,33 @@ export default function Exhibit({
             <div
               ref={artRef}
               className="exhibit-art mx-auto w-full max-w-[720px] border border-gray-800 bg-[#0C0C0C] overflow-hidden will-change-transform transition-colors duration-500 group-hover/exhibit:border-white/25"
-              onClick={() => setImageRevealed(!imageRevealed)}
+              onClick={() => {
+                if (videoSrc) {
+                  if (videoPlaying) {
+                    videoRef.current?.pause();
+                    setVideoPlaying(false);
+                  } else {
+                    videoRef.current?.play();
+                    setVideoPlaying(true);
+                  }
+                } else {
+                  setImageRevealed(!imageRevealed);
+                }
+              }}
             >
+              {videoSrc && (
+                <video
+                  ref={videoRef}
+                  src={videoSrc}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  className={`block h-auto w-full transition-opacity duration-500 ${
+                    videoPlaying ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                  }`}
+                />
+              )}
               <Image
                 src={imageSrc}
                 alt={imageAlt}
@@ -146,9 +175,11 @@ export default function Exhibit({
                 placeholder="blur"
                 blurDataURL="data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAEfQ//g=="
                 className={`block h-auto w-full transition-[filter] duration-500 ease-out ${
-                  imageRevealed
-                    ? 'grayscale-0 brightness-100'
-                    : 'grayscale-[0.6] brightness-90 group-hover/exhibit:grayscale-0 group-hover/exhibit:brightness-100'
+                  videoPlaying
+                    ? 'opacity-0 absolute inset-0'
+                    : imageRevealed
+                      ? 'grayscale-0 brightness-100'
+                      : 'grayscale-[0.6] brightness-90 group-hover/exhibit:grayscale-0 group-hover/exhibit:brightness-100'
                 }`}
               />
             </div>
