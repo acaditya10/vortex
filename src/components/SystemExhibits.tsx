@@ -6,30 +6,30 @@ export default function SystemExhibits() {
     <section id="work" className="relative z-10 bg-[var(--bg)]">
       <Exhibit
         index="01"
-        name="PRINCE ACHAR"
-        hook="Engineered a high-performance headless Shopify build with seamless GSAP page transitions and edge-delivered visual assets. Bypassed Shopify's rigid templates to deliver instant page loads, creating a frictionless shopping experience designed to maximize conversion rates."
-        quote="Aditya entirely decoupled our infrastructure, giving us an enterprise-grade storefront without sacrificing our existing operational backend."
+        name="WINIT MEDIA"
+        hook="Built a kinetic typography system and custom SVG interactive diagrams with buttery-smooth scroll triggers. Architected a secure, multi-domain enterprise platform so their internal team can safely edit content and manage leads without risking the platform's stability."
+        quote="We needed a secure, multi-tenant ecosystem for our leads and editors. Vortex engineered a fortress."
         quoteAuthor="Founder"
-        quoteRole="Prince Achar"
-        metaLine="DESIGN + DEVELOPMENT / E-COMMERCE / NEXT.JS / SHOPIFY / GSAP / 2024"
-        href="https://princeachar.com"
-        imageSrc="/pa1.webp"
-        imageAlt="Prince Achar headless commerce storefront"
+        quoteRole="Winit Media"
+        metaLine="DESIGN + DEVELOPMENT / BRAND WEBSITE / NEXT.JS / GSAP SCROLLTRIGGER / 2026"
+        href="https://winitmedia.com"
+        imageSrc="/wm1.webp"
+        imageAlt="Winit Media enterprise platform interface"
       />
 
       <Agitator />
 
       <Exhibit
         index="02"
-        name="WINIT MEDIA"
-        hook="Built a kinetic typography system and custom SVG interactive diagrams with buttery-smooth scroll triggers. Architected a secure, multi-domain enterprise platform so their internal team can safely edit content and manage leads without risking the platform's stability."
-        quote="We needed a secure, multi-tenant ecosystem for our leads and editors. Vortex engineered a fortress."
+        name="PRINCE ACHAR"
+        hook="Engineered a high-performance headless Shopify build with seamless GSAP page transitions and edge-delivered visual assets. Bypassed Shopify's rigid templates to deliver instant page loads, creating a frictionless shopping experience designed to maximize conversion rates."
+        quote="Aditya entirely decoupled our infrastructure, giving us an enterprise-grade storefront without sacrificing our existing operational backend."
         quoteAuthor="Founder"
-        quoteRole="Winit Media"
-        metaLine="DESIGN + DEVELOPMENT / BRAND WEBSITE / NEXT.JS / GSAP SCROLLTRIGGER / 2024"
-        href="https://winitmedia.com"
-        imageSrc="/wm1.webp"
-        imageAlt="Winit Media enterprise platform interface"
+        quoteRole="Prince Achar"
+        metaLine="DESIGN + DEVELOPMENT / E-COMMERCE / NEXT.JS / SHOPIFY / GSAP / 2026"
+        href="https://princeachar.com"
+        imageSrc="/pa1.webp"
+        imageAlt="Prince Achar headless commerce storefront"
         reversed
       />
 
@@ -40,7 +40,7 @@ export default function SystemExhibits() {
         quote="The kinetic UI is flawless, but the real masterpiece is the zero-deploy content pipeline Aditya built for our team."
         quoteAuthor="Founder"
         quoteRole="Upmark Media"
-        metaLine="DESIGN + DEVELOPMENT / DIGITAL EXPERIENCE / NEXT.JS / FRAMER MOTION / 2024"
+        metaLine="DESIGN + DEVELOPMENT / DIGITAL EXPERIENCE / NEXT.JS / FRAMER MOTION / 2026"
         href="https://upmarkmedia.com"
         imageSrc="/um1.webp"
         imageAlt="Upmark Media content platform interface"
