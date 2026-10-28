@@ -77,7 +77,7 @@ export default function Protocol() {
       <div className="lg:grid lg:grid-cols-[35%_65%]">
         <div className="pb-14 lg:sticky lg:top-24 lg:self-start lg:pb-0 lg:pr-20">
           <p className="font-mono text-[10px] tracking-[0.35em] text-[var(--fg-dim)]">
-            <span className="text-[var(--accent)]">05</span> {"// OPERATING PROTOCOL"}
+            <span className="text-[var(--accent)]">06</span> {"// OPERATING PROTOCOL"}
           </p>
 
           <h2

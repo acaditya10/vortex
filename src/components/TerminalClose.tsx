@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { trackFormSubmit, trackFormError, trackScheduleClick, trackExternalLink } from '@/lib/analytics';
+import { trackFormSubmit, trackFormError, trackScheduleClick } from '@/lib/analytics';
+import { SITE } from '@/lib/site';
+import SiteFooter from '@/components/SiteFooter';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
@@ -79,7 +80,7 @@ export default function TerminalClose() {
     }
 
     try {
-      const res = await fetch('https://formsubmit.co/ajax/hi@acaditya10.tech', {
+      const res = await fetch(`https://formsubmit.co/ajax/${SITE.email}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
@@ -105,7 +106,7 @@ export default function TerminalClose() {
     }
   };
 
-  const calLink = `https://cal.com/acaditya10/discovery?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&notes=${encodeURIComponent(formData.notes)}`;
+  const calLink = `${SITE.calComUrl}?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&notes=${encodeURIComponent(formData.notes)}`;
 
   return (
     <section
@@ -227,8 +228,25 @@ export default function TerminalClose() {
                   </>
                 )}
               </button>
+              <p className="mt-6 font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)]">
+                [ INVESTMENT ] STARTING RANGES PUBLISHED ON{' '}
+                <a href="/pricing" data-cursor-hover className="text-[var(--fg-muted)] transition-colors hover:text-[var(--fg)]">
+                  /PRICING
+                </a>{' '}
+                — FULLY SCOPED AT DISCOVERY
+              </p>
               <p className="mt-5 font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)]">
-                [ INVESTMENT ] SCOPED PER PROJECT AT DISCOVERY — NO GENERIC PACKAGES
+                OR BOOK DIRECT —{' '}
+                <a
+                  href={SITE.calComUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor-hover
+                  onClick={() => trackScheduleClick('contact_inline')}
+                  className="text-[var(--fg-muted)] transition-colors hover:text-[var(--fg)]"
+                >
+                  30-MIN DISCOVERY CALL ↗
+                </a>
               </p>
             </div>
           </form>
@@ -266,40 +284,9 @@ export default function TerminalClose() {
         )}
 
         {/* Footer Bar */}
-        <footer className="mt-32 border-t border-white/5 pt-8 sm:mt-40">
-          <div className="flex flex-col gap-6 text-[9px] font-mono tracking-wider text-[var(--fg-dim)] sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-[10px] md:text-[11px]">
-            <span className="flex items-center gap-3">
-              <span>IMMERSIVE DIGITAL EXPERIENCES /</span>
-              <Image
-                src="/logo.png"
-                alt="Vortex Labs"
-                width={80}
-                height={16}
-                className="h-3 w-auto opacity-60"
-              />
-            </span>
-            <div className="flex items-center gap-8">
-              <a
-                href="mailto:hi@acaditya10.tech"
-                data-cursor-hover
-                className="outline-none transition-colors duration-300 hover:text-[var(--fg-muted)] focus-visible:text-[var(--fg-muted)]"
-              >
-                [ EMAIL ↗ ]
-              </a>
-              <a
-                href="https://github.com/acaditya10"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor-hover
-                className="outline-none transition-colors duration-300 hover:text-[var(--fg-muted)] focus-visible:text-[var(--fg-muted)]"
-                onClick={() => trackExternalLink('https://github.com/acaditya10', 'GitHub')}
-              >
-                [ GITHUB ↗ ]
-              </a>
-            </div>
-            <span>INDIA · REMOTE-FIRST — &copy; {new Date().getFullYear()}</span>
-          </div>
-        </footer>
+        <div className="mt-32 -mx-6 -mb-20 sm:-mx-10 sm:-mb-24 lg:-ml-[7vw] lg:-mr-[7vw]">
+          <SiteFooter />
+        </div>
       </div>
     </section>
   );

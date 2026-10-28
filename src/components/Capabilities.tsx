@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef } from 'react';
+import Link from 'next/link';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
@@ -9,26 +10,32 @@ const DISCIPLINES = [
   {
     title: 'NEXT.JS / REACT',
     body: 'Production-grade builds on modern React. Headless architecture, typed end-to-end, deployed to the edge.',
+    href: '/services/nextjs-development',
   },
   {
     title: 'MOTION & INTERACTION',
     body: 'GSAP choreography, kinetic typography and scroll systems tuned until they feel engineered — never decorative.',
+    href: '/services',
   },
   {
     title: 'HEADLESS SHOPIFY',
     body: "Decoupled storefronts that bypass template rigidity. Instant loads, full design control, zero backend disruption.",
+    href: '/services/headless-shopify',
   },
   {
     title: 'CMS PIPELINES',
     body: 'Serverless editing workflows that let non-technical teams ship content safely — without touching code.',
+    href: '/services/nextjs-development',
   },
   {
     title: 'PERFORMANCE ENGINEERING',
     body: 'Core Web Vitals treated as features. Image pipelines, edge delivery and LCP budgets enforced from day one.',
+    href: '/services/performance-seo',
   },
   {
     title: 'SEO FOUNDATIONS',
     body: 'Technical SEO, structured metadata and analytics wired into every build — not bolted on after launch.',
+    href: '/services/performance-seo',
   },
 ];
 
@@ -102,7 +109,9 @@ export default function Capabilities() {
               {String(i + 1).padStart(2, '0')}
             </p>
             <h3 className="mt-5 font-mono text-sm font-medium tracking-[0.12em] text-[var(--fg)]">
-              {d.title}
+              <Link href={d.href} data-cursor-hover className="transition-colors group-hover/cell:text-[var(--accent)]">
+                {d.title}
+              </Link>
             </h3>
             <p className="mt-4 max-w-xs text-sm font-light leading-relaxed tracking-wide text-gray-400">
               {d.body}

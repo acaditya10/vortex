@@ -341,8 +341,11 @@ export default function GridBackground() {
     window.addEventListener('touchend', onTouchEnd);
     if (isMobile && typeof DeviceOrientationEvent !== 'undefined') {
       // iOS 13+ requires permission
-      if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
-        (DeviceOrientationEvent as any).requestPermission()
+      const orientationEvent = DeviceOrientationEvent as unknown as {
+        requestPermission?: () => Promise<string>;
+      };
+      if (typeof orientationEvent.requestPermission === 'function') {
+        orientationEvent.requestPermission()
           .then((state: string) => {
             if (state === 'granted') {
               window.addEventListener('deviceorientation', onOrientation);

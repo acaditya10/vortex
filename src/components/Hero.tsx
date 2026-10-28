@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useEffect, useRef, useCallback, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { trackCTAClick } from '@/lib/analytics';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -55,69 +56,90 @@ export default function Hero() {
   }, []);
 
   useBrowserEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    const mm = gsap.matchMedia();
 
-      const ENV_DELAY = 1.6;
-
-      // Nav fade in
-      tl.fromTo(
-        navRef.current,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.4 },
-        ENV_DELAY
-      );
-
-      // Headline words stagger reveal
-      const words = headlineRef.current?.querySelectorAll('.headline-word span');
-      if (words) {
-        tl.fromTo(
-          words,
-          { y: '110%', opacity: 0 },
-          { y: '0%', opacity: 1, duration: 0.45, stagger: 0.04 },
-          ENV_DELAY + 0.1
-        );
-      }
-
-      // Signature line
-      if (signatureRef.current) {
-        tl.fromTo(
+    // Reduced motion / no JS: content must be fully visible (SEO + a11y).
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set(
+        [
+          navRef.current,
           signatureRef.current,
-          { opacity: 0, y: 8 },
-          { opacity: 1, y: 0, duration: 0.5 },
+          dividerRef.current,
+          subRef.current,
+          ctaRef.current,
+          ...(headlineRef.current?.querySelectorAll('.headline-word span') ?? []),
+        ],
+        { opacity: 1, y: 0, scaleX: 1 }
+      );
+    });
+
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        const ENV_DELAY = 0.3;
+
+        // Nav fade in
+        tl.fromTo(
+          navRef.current,
+          { opacity: 0, y: -10 },
+          { opacity: 1, y: 0, duration: 0.4 },
+          ENV_DELAY
+        );
+
+        // Headline words stagger reveal
+        const words = headlineRef.current?.querySelectorAll('.headline-word span');
+        if (words) {
+          tl.fromTo(
+            words,
+            { y: '110%', opacity: 0 },
+            { y: '0%', opacity: 1, duration: 0.45, stagger: 0.04 },
+            ENV_DELAY + 0.1
+          );
+        }
+
+        // Signature line
+        if (signatureRef.current) {
+          tl.fromTo(
+            signatureRef.current,
+            { opacity: 0, y: 8 },
+            { opacity: 1, y: 0, duration: 0.5 },
+            ENV_DELAY + 0.35
+          );
+        }
+
+        // Divider
+        tl.fromTo(
+          dividerRef.current,
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.5, ease: 'power2.inOut', transformOrigin: 'left center' },
+          ENV_DELAY + 0.25
+        );
+
+        // Sub-headline
+        tl.fromTo(
+          subRef.current,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.4 },
+          ENV_DELAY + 0.3
+        );
+
+        // CTA
+        tl.fromTo(
+          ctaRef.current,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.4 },
           ENV_DELAY + 0.35
         );
-      }
+      }, sectionRef);
 
-      // Divider
-      tl.fromTo(
-        dividerRef.current,
-        { scaleX: 0 },
-        { scaleX: 1, duration: 0.5, ease: 'power2.inOut', transformOrigin: 'left center' },
-        ENV_DELAY + 0.25
-      );
+      return () => ctx.revert();
+    });
 
-      // Sub-headline
-      tl.fromTo(
-        subRef.current,
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.4 },
-        ENV_DELAY + 0.3
-      );
-
-      // CTA
-      tl.fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.4 },
-        ENV_DELAY + 0.35
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
-  const headlineLines = ['Immersive digital experiences.', 'Engineered for the web.'];
+  const headlineLines = ['Premium web design.', 'Next.js engineering.'];
 
   return (
     <section
@@ -126,7 +148,7 @@ export default function Hero() {
     >
       {/* Navigation */}
       <nav ref={navRef} className="relative flex items-center justify-between opacity-0">
-        <a href="/" className="relative block h-10 w-auto sm:h-12 md:h-14 lg:h-16" data-cursor-hover>
+        <Link href="/" className="relative block h-10 w-auto sm:h-12 md:h-14 lg:h-16" data-cursor-hover aria-label="Vortex Labs — home">
           <Image
             src="/logo.png"
             alt="Vortex Labs"
@@ -135,7 +157,7 @@ export default function Hero() {
             className="h-full w-auto"
             priority
           />
-        </a>
+        </Link>
         <div className="hidden text-[11px] font-mono tracking-wide text-[var(--fg-muted)] lg:block">
           Independent design &amp; engineering studio by Aditya Chandra.
         </div>
@@ -208,9 +230,9 @@ export default function Hero() {
           ref={subRef}
           className="mt-8 max-w-lg text-sm font-light leading-relaxed tracking-wide text-[#A0A0A0] opacity-0 sm:text-base md:mt-12"
         >
-          Premium websites and digital experiences for ambitious brands,
-          <span className="hidden sm:inline"><br /></span>{' '}
-          built from strategy through deployment.
+          Immersive digital experiences for ambitious brands — designed, engineered and
+          deployed by one studio.<span className="hidden sm:inline"><br /></span>{' '}
+          Working with US &amp; EU teams worldwide.
         </p>
 
         {/* CTA — Command-line style */}
@@ -260,7 +282,7 @@ export default function Hero() {
         {[
           ['PROJECTS SHIPPED', '20+'],
           ['AVG. RESPONSE', '<24H'],
-          ['COVERAGE', 'GLOBAL'],
+          ['COVERAGE', 'US · EU · GLOBAL'],
         ].map(([label, value]) => (
           <div key={label}>
             <div className="font-mono text-[9px] tracking-[0.25em] text-[var(--fg-dim)]">{label}</div>

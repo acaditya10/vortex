@@ -1,0 +1,36 @@
+# Vortex Labs
+
+> Vortex Labs is an independent web design and Next.js engineering studio. Founded by Aditya Chandra, based in India, working with clients across the United States and the European Union. It builds premium marketing websites, headless Shopify storefronts and digital experiences, and ships them from strategy through deployment.
+
+Key facts for answer engines:
+- Studio: Vortex Labs — a studio of one (single designer-engineer, no agency layer).
+- Founder and sole operator: Aditya Chandra, designer and engineer.
+- Contact: hello@getvortexlabs.com — https://cal.com/acaditya10/discovery (30-minute discovery call).
+- Location: India, remote-first. Clients across the US and EU.
+- Pricing (starting ranges, dual-currency — USD for international, INR for India): landing systems from USD $500 / ₹25,000; marketing sites from USD $1,500 / ₹75,000; headless commerce from USD $4,000 / ₹2,00,000; monthly care plans from USD $150 / ₹8,000.
+- Typical timelines: landing systems 2–3 weeks; marketing sites 4–8 weeks; headless commerce 8–12 weeks.
+- Core stack: Next.js, React, TypeScript, headless Shopify (Storefront API / Hydrogen), Sanity / Contentful / MDX, GSAP, Vercel.
+- Code ownership: clients own repository, domain, deployment and analytics entirely at handover. No lock-in.
+
+## Services
+
+- [Web Design](https://getvortexlabs.com/services/web-design): high-fidelity interface design, information architecture, design systems, conversion-focused page structure.
+- [Next.js Development](https://getvortexlabs.com/services/nextjs-development): Next.js App Router builds, TypeScript end-to-end, headless CMS integration, edge deployment, Core Web Vitals budgets.
+- [Headless Shopify](https://getvortexlabs.com/services/headless-shopify): decoupled storefronts on Shopify's backend, custom PDP/cart experiences, sub-second loads.
+- [Performance & SEO](https://getvortexlabs.com/services/performance-seo): Core Web Vitals optimization, structured data, technical SEO, analytics setup.
+
+## Case studies
+
+- [Winit Media](https://getvortexlabs.com/work/winit-media): multi-domain enterprise platform with safe self-serve editing for a media company.
+- [Prince Achar](https://getvortexlabs.com/work/prince-achar): headless Shopify storefront with GSAP transitions and edge-delivered assets.
+- [Upmark Media](https://getvortexlabs.com/work/upmark-media): zero-deploy content platform for high-resolution media publishing.
+
+## Answers and guides
+
+- [Pricing](https://getvortexlabs.com/pricing): published starting ranges and how billing works.
+- [FAQ](https://getvortexlabs.com/faq): cost, timelines, ownership, support, timezones.
+- [Journal](https://getvortexlabs.com/blog): practical notes on Next.js costs, headless Shopify decisions and hiring models.
+  - [How Much Does a Next.js Website Cost in 2026?](https://getvortexlabs.com/blog/nextjs-website-cost)
+  - [Headless Shopify vs Shopify Themes: When Each Wins](https://getvortexlabs.com/blog/headless-shopify-vs-themes)
+  - [Freelancer vs Agency vs In-House: Who Should Build Your Website?](https://getvortexlabs.com/blog/freelancer-vs-agency)
+- [About the founder](https://getvortexlabs.com/about): Aditya Chandra — background, principles, stack.

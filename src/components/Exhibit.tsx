@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { trackExhibitClick, trackExternalLink } from '@/lib/analytics';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -20,6 +21,8 @@ export type ExhibitProps = {
   imageAlt: string;
   videoSrc?: string;
   reversed?: boolean;
+  /** Internal case-study page link (SEO: keeps link equity in-site) */
+  caseStudyHref?: string;
 };
 
 export default function Exhibit({
@@ -35,6 +38,7 @@ export default function Exhibit({
   imageAlt,
   videoSrc,
   reversed = false,
+  caseStudyHref,
 }: ExhibitProps) {
   const dossierRef = useRef<HTMLDivElement>(null);
   const artRef = useRef<HTMLDivElement>(null);
@@ -115,20 +119,32 @@ export default function Exhibit({
             </figcaption>
           </figure>
 
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cursor-hover
-            className="group/cta mt-12 inline-flex items-baseline self-start font-mono text-xs tracking-[0.2em] text-white outline-none transition-colors duration-300 hover:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-            onClick={() => trackExternalLink(href, name)}
-          >
-            [ VISIT LIVE SITE{' '}
-            <span className="inline-block transition-transform duration-300 group-hover/cta:-translate-y-0.5 group-hover/cta:translate-x-0.5">
-              ↗
-            </span>{' '}
-            ]
-          </a>
+          <div className="mt-12 flex flex-wrap items-baseline gap-x-8 gap-y-4">
+            {caseStudyHref && (
+              <Link
+                href={caseStudyHref}
+                data-cursor-hover
+                className="group/cta inline-flex items-baseline font-mono text-xs tracking-[0.2em] text-[var(--fg-muted)] outline-none transition-colors duration-300 hover:text-[var(--fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              >
+                [ READ CASE STUDY
+                <span className="inline-block transition-transform duration-300 group-hover/cta:translate-x-1">→</span> ]
+              </Link>
+            )}
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor-hover
+              className="group/cta inline-flex items-baseline font-mono text-xs tracking-[0.2em] text-white outline-none transition-colors duration-300 hover:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              onClick={() => trackExternalLink(href, name)}
+            >
+              [ VISIT LIVE SITE{' '}
+              <span className="inline-block transition-transform duration-300 group-hover/cta:-translate-y-0.5 group-hover/cta:translate-x-0.5">
+                ↗
+              </span>{' '}
+              ]
+            </a>
+          </div>
         </div>
 
         {/* Artwork */}

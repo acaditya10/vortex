@@ -1,36 +1,12 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 const useBrowserEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import gsap from 'gsap';
 
-const ANSWERS = [
-  {
-    q: 'HOW LONG DOES A BUILD TAKE?',
-    a: "Every project gets a concrete schedule at scope — and it holds. Landing systems move fastest; full custom sites run longer depending on motion complexity and content readiness. You'll know the timeline before committing, not after.",
-  },
-  {
-    q: 'HOW DO REVISIONS WORK?',
-    a: "You review high-fidelity design before a single component ships, so iteration happens early — where it's cheap. During build, changes move fast for one reason: the designer and the developer are the same person. There is no telephone game.",
-  },
-  {
-    q: 'WHO OWNS THE CODE?',
-    a: 'You do. Entirely. Repository, deployment pipeline, domain, analytics — everything transfers at handover with documentation. No lock-in. No proprietary platform. No hostage situation.',
-  },
-  {
-    q: 'WHAT HAPPENS AFTER LAUNCH?',
-    a: 'Launch ends the project, not the relationship. Structured care plans cover ongoing improvements; ad-hoc support handles everything else. Either way, the person who built your site is the person who maintains it.',
-  },
-  {
-    q: 'WHY SOLO INSTEAD OF AN AGENCY?',
-    a: "Agencies coordinate; I build. One accountable operator means decisions happen in hours instead of standups, budgets go into craft instead of overhead — and the person designing your interface writes its production code. That's not a limitation. It's the feature.",
-  },
-  {
-    q: 'WHAT DO YOU NEED FROM ME TO START?',
-    a: 'A discovery call first. Then brand assets, content direction and platform access at kickoff. From there you review at defined checkpoints while I handle everything end-to-end.',
-  },
-];
+import { FAQS } from '@/lib/faq';
 
 export default function Answers() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -82,7 +58,7 @@ export default function Answers() {
       <div className="lg:grid lg:grid-cols-[35%_65%]">
         <div className="pb-12 lg:sticky lg:top-24 lg:self-start lg:pb-0 lg:pr-20">
           <p className="font-mono text-[10px] tracking-[0.35em] text-[var(--fg-dim)]">
-            <span className="text-[var(--accent)]">07</span> {"// DIRECT ANSWERS"}
+            <span className="text-[var(--accent)]">08</span> {"// DIRECT ANSWERS"}
           </p>
 
           <h2
@@ -93,10 +69,20 @@ export default function Answers() {
           </h2>
 
           <div className="divider mt-8 w-16 origin-left" />
+
+          <p className="mt-8 max-w-xs text-sm font-light leading-relaxed tracking-wide text-[var(--fg-muted)]">
+            Cost, timeline, ownership, support — answered straight, no sales script.
+          </p>
+
+          <p className="mt-6 font-mono text-[10px] tracking-[0.2em] text-[var(--fg-dim)]">
+            <Link href="/faq" data-cursor-hover className="transition-colors hover:text-[var(--fg-muted)]">
+              ALL QUESTIONS →
+            </Link>
+          </p>
         </div>
 
         <div>
-          {ANSWERS.map((item, i) => {
+          {FAQS.slice(0, 6).map((item, i) => {
             const isOpen = openIndex === i;
             const panelId = `faq-panel-${i}`;
             const buttonId = `faq-button-${i}`;
@@ -120,7 +106,7 @@ export default function Answers() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <span
-                      className={`font-mono text-xs font-medium tracking-[0.12em] transition-colors duration-300 sm:text-sm ${
+                      className={`font-mono text-xs font-medium uppercase tracking-[0.12em] transition-colors duration-300 sm:text-sm ${
                         isOpen ? 'text-[var(--fg)]' : 'text-[var(--fg-muted)] group-hover/row:text-[var(--fg)]'
                       }`}
                     >

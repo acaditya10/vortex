@@ -197,7 +197,7 @@ export default function Operator() {
             data-op-kicker
             className="font-mono text-[11px] tracking-[0.35em] text-[#6B6560] opacity-0"
           >
-            <span className="text-[var(--accent)]">06</span> {"// THE OPERATOR"}
+            <span className="text-[var(--accent)]">07</span> {"// THE OPERATOR"}
           </p>
 
           <h2 className="mt-6 text-[clamp(2.625rem,5.25vw,4.75rem)] font-extrabold leading-[0.97] tracking-[-0.03em] text-[var(--fg-muted)]">
@@ -222,9 +222,9 @@ export default function Operator() {
 
           <div data-op-copy className="mt-8 max-w-xl opacity-0">
             <p className="text-base font-light leading-[1.75] tracking-[0.01em] text-[#D0CBC5] sm:text-lg">
-              Vortex Labs is an independent web design &amp; engineering<br />
-              studio based in India, working remotely with ambitious<br />
-              brands worldwide.
+              Vortex Labs is an independent web design &amp; Next.js<br />
+              engineering studio based in India, working remotely<br />
+              with ambitious brands across the US and EU.
             </p>
             <p className="mt-8 text-base font-light leading-[1.75] tracking-[0.01em] text-[#7A7570] sm:text-lg">
               I design and engineer the product myself &mdash;<br />
